@@ -9,12 +9,12 @@
     },
     "authors": [
         {
-            "name": "anibal yucra"
+            "name": "YAMPIERS QUISPE"
         }
     ],
     "require": {
         "phpmailer/phpmailer": "^6.9",
-        "tecnickcom/tcpdf": "^6.9",
-        "phpoffice/phpspreadsheet": "^4.2"
+        "phpoffice/phpspreadsheet": "^4.2",
+        "tecnickcom/tcpdf": "^6.9"
     }
 }
