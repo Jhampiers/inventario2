@@ -19,7 +19,7 @@
       border: 1px solid #dddddd;
     }
     .header {
-      background-color: #004aad;
+      background-color: #900C3F;
       color: white;
       padding: 20px;
       text-align: center;
@@ -37,7 +37,7 @@
     }
     .button {
       display: inline-block;
-      background-color: #004aad;
+      background-color: #900C3F;
       color: #ffffff !important;
       padding: 12px 25px;
       margin: 20px 0;
@@ -63,22 +63,23 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h2>Nombre de tu empresa</h2>
-    </div>
+   <div class="header" style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+  <img src="https://ipeg.edu.pe/wp-content/uploads/2024/10/customer39d.png" alt="Logo del instituto" style="height: 70px;">
+  <h2 style="color: white; margin: 0; font-size: 20px;">UNIVERSIDAD NACIONAL AUTÓNOMA DE HUANTA</h2>
+</div>
     <div class="content">
-      <h1>Hola [Nombre del cliente],</h1>
+      <h1>Hola YAMPIERS QUISPE VELASQUE,</h1>
       <p>
-        Te saludamos cordialmente. Queremos informarte sobre nuestras últimas novedades y promociones exclusivas para ti.
+        Te saludamos cordialmente. Queremos informarte sobre nuestras últimas novedades académicas y las oportunidades que la UNIVERSIDAD AUTONOMA DE HUANTA tiene para ti.
       </p>
       <p>
-        ¡No te pierdas nuestras ofertas especiales por tiempo limitado!
+        ¡Conoce nuestras carreras profesionales y aprovecha los procesos de admisión vigentes para formar parte de nuestra comunidad educativa!
       </p>
-      <a href="https://www.tusitio.com/promocion" class="button">Ver más</a>
+      <a href="https://www.tusitio.com/promocion" class="button">Ver carreras</a>
       <p>Gracias por confiar en nosotros.</p>
     </div>
     <div class="footer">
-      © 2025 Nombre de tu empresa. Todos los derechos reservados.<br>
+      © 2025 INSTITUTO DE EDUCACIÓN SUPERIOR PÚBLICO "HUANTA". Todos los derechos reservados.<br>
       <a href="https://www.tusitio.com/desuscribirse">Cancelar suscripción</a>
     </div>
   </div>

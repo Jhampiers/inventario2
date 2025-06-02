@@ -203,7 +203,7 @@ try {
     $mail->charset = 'UTF-8';                             //Set email format to HTML
     $mail->Subject = 'cambio de contraseña - sistema inventario';
     $mail->Body    = '
-    <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -224,7 +224,7 @@ try {
       border: 1px solid #dddddd;
     }
     .header {
-      background-color: #004aad;
+      background-color: #900C3F;
       color: white;
       padding: 20px;
       text-align: center;
@@ -242,7 +242,7 @@ try {
     }
     .button {
       display: inline-block;
-      background-color: #004aad;
+      background-color: #900C3F;
       color: #ffffff !important;
       padding: 12px 25px;
       margin: 20px 0;
@@ -268,22 +268,27 @@ try {
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h2>Nombre de tu empresa</h2>
-    </div>
-    <div class="content">
-      <h1>Hola [Nombre del cliente],</h1>
-      <p>
-        Te saludamos cordialmente. Queremos informarte sobre nuestras últimas novedades y promociones exclusivas para ti.
-      </p>
-      <p>
-        ¡No te pierdas nuestras ofertas especiales por tiempo limitado!
-      </p>
-      <a href="https://www.tusitio.com/promocion" class="button">Ver más</a>
-      <p>Gracias por confiar en nosotros.</p>
-    </div>
+   <div class="header" style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+  <img src="https://ipeg.edu.pe/wp-content/uploads/2024/10/customer39d.png" alt="Logo del instituto" style="height: 70px;">
+  <h2 style="color: white; margin: 0; font-size: 20px;">UNIVERSIDAD NACIONAL AUTÓNOMA DE HUANTA</h2>
+</div>
+   <div class="content">
+  <h1>Hola YAMPIERS QUISPE VELASQUE,</h1>
+  <p>
+    Te saludamos cordialmente. Hemos recibido una solicitud para restablecer tu contraseña en la plataforma de la UNIVERSIDAD NACIONAL AUTÓNOMA DE HUANTA.
+  </p>
+  <p>
+    Si realizaste esta solicitud, por favor haz clic en el siguiente enlace para crear una nueva contraseña de forma segura.
+  </p>
+  <a href="https://www.tusitio.com/restablecer-contrasena" class="button">Cambiar contraseña</a>
+  <p>
+    Si no solicitaste este cambio, puedes ignorar este mensaje. Tu información permanecerá segura.
+  </p>
+  <p>Gracias por confiar en nosotros.</p>
+</div>
+
     <div class="footer">
-      © 2025 Nombre de tu empresa. Todos los derechos reservados.<br>
+      © 2025 UNIVERSIDAD NACIONAL AUTÓNOMA DE HUANTA. Todos los derechos reservados.<br>
       <a href="https://www.tusitio.com/desuscribirse">Cancelar suscripción</a>
     </div>
   </div>
