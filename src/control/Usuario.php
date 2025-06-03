@@ -159,6 +159,7 @@ if ($tipo=="sent_email_password") {
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
         $datos_sesion = $objSesion->buscarSesionLoginById($id_sesion);
         $datos_usuario = $objUsuario->buscarUsuarioById($datos_sesion->id_usuario);
+        $datosusuario = $datos_usuario->nombres_apellidos;
         $llave = $objAdmin->generar_llave(30);
         $token = password_hash($llave, PASSWORD_DEFAULT);
         $update = $objUsuario->updateResetPassword($datos_sesion->id_usuario, $llave, 1);
@@ -273,7 +274,7 @@ try {
   <h2 style="color: white; margin: 0; font-size: 20px;">UNIVERSIDAD NACIONAL AUTÓNOMA DE HUANTA</h2>
 </div>
    <div class="content">
-  <h1>Hola YAMPIERS QUISPE VELASQUE,</h1>
+  <h1>Hola ' .$datosusuario.'  </h1>
   <p>
     Te saludamos cordialmente. Hemos recibido una solicitud para restablecer tu contraseña en la plataforma de la UNIVERSIDAD NACIONAL AUTÓNOMA DE HUANTA.
   </p>
