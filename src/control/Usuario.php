@@ -292,7 +292,7 @@ try {
   <p>
     Si realizaste esta solicitud, por favor haz clic en el siguiente enlace para crear una nueva contraseña de forma segura.
   </p>
-  <a href="'.BASE_URL.'reset-password?data='.$datos_usuario->id.'&data2='.$token.'" class="button">Cambiar contraseña</a>
+  <a href="'.BASE_URL.'reset-password/?data='.$datos_usuario->id.'&data2='.urlencode($token).'" class="button">Cambiar contraseña</a>
   <p>
     Si no solicitaste este cambio, puedes ignorar este mensaje. Tu información permanecerá segura.
   </p>
