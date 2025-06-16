@@ -108,7 +108,7 @@ class UsuarioModel
         return $arrRespuesta;
     }
 // TAREA
-public function guardarNuevoPassword($id, $password)
+public function guardarNewPassword($id, $password)
 {
     $conexion = $this->conexion;
     $password_secure = password_hash($password, PASSWORD_DEFAULT);

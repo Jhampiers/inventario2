@@ -170,7 +170,7 @@ if ($tipo == "reiniciar_password") {
 
 //TAREA
 
-if ($tipo == "nuevo_password") {
+if ($tipo == "new_password") {
     $id_usuario = $_POST['id'];
     $nueva_password = $_POST['password'];
     $token_email = $_POST['token'];
@@ -179,7 +179,7 @@ if ($tipo == "nuevo_password") {
     $datos_usuario = $objUsuario->buscarUsuarioById($id_usuario);
     
     if ($datos_usuario && $datos_usuario->reset_password == 1 && password_verify($datos_usuario->token_password, $token_email)) {
-        $resultado = $objUsuario->guardarNuevoPassword($id_usuario, $nueva_password);
+        $resultado = $objUsuario->guardarNewPassword($id_usuario, $nueva_password);
         
         if ($resultado) {
             $arr_Respuesta = array(

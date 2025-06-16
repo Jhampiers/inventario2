@@ -194,7 +194,17 @@ async function validar_datos_reset_password() {
         timer: 1000
     });
     let formulario = document.getElementById('frm_reset-password');
-    formulario.innerHTML='texto de prueba';
+   formulario.innerHTML = `
+    <div class="card">
+        <h2>Enlace caducado</h2>
+        <p>Lo sentimos, el enlace para restablecer tu contraseña ha expirado o ya fue utilizado.</p>
+        <a href="solicitar-reset.php" 
+           style="display:inline-block;margin-top:20px;background-color:#900C3F;color:white;padding:10px 20px;text-decoration:none;border-radius:6px;">
+           Solicitar un nuevo enlace
+        </a>
+    </div>
+`;
+
     //location.replace(base_url + "login");
         }
     } catch (e) {
@@ -252,7 +262,7 @@ async function actualizar_password() {
     try {
 
         // Enviar datos al controlador
-        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=nuevo_password', {
+        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=new_password', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
