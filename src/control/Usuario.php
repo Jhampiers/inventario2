@@ -149,6 +149,8 @@ if ($tipo == "actualizar") {
     }
     echo json_encode($arr_Respuesta);
 }
+
+
 if ($tipo == "reiniciar_password") {
     $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
@@ -165,6 +167,41 @@ if ($tipo == "reiniciar_password") {
     }
     echo json_encode($arr_Respuesta);
 }
+
+//TAREA
+
+if ($tipo == "nuevo_password") {
+    $id_usuario = $_POST['id'];
+    $nueva_password = $_POST['password'];
+    $token_email = $_POST['token'];
+    
+    $arr_Respuesta = array('status' => false, 'msg' => 'Error al actualizar contraseña');
+    $datos_usuario = $objUsuario->buscarUsuarioById($id_usuario);
+    
+    if ($datos_usuario && $datos_usuario->reset_password == 1 && password_verify($datos_usuario->token_password, $token_email)) {
+        $resultado = $objUsuario->guardarNuevoPassword($id_usuario, $nueva_password);
+        
+        if ($resultado) {
+            $arr_Respuesta = array(
+                'status' => true, 
+                'msg' => 'Gracias por mantener tu cuenta protegida'
+            );
+        } else {
+            $arr_Respuesta = array(
+                'status' => false, 
+                'msg' => 'Error al guardar en la base de datos'
+            );
+        }
+    } else {
+        $arr_Respuesta = array(
+            'status' => false, 
+            'msg' => 'Token inválido o expirado'
+        );
+    }
+    
+    echo json_encode($arr_Respuesta);
+}
+
 if ($tipo=="sent_email_password") {
     $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
@@ -175,6 +212,7 @@ if ($tipo=="sent_email_password") {
         $token = password_hash($llave, PASSWORD_DEFAULT);
         $update = $objUsuario->updateResetPassword($datos_sesion->id_usuario, $llave, 1);
         if($update){
+
            //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 
@@ -212,7 +250,7 @@ try {
     */
     //Content
     $mail->isHTML(true);     
-    $mail->charset = 'UTF-8';                             //Set email format to HTML
+    $mail->CharSet = 'UTF-8';                             //Set email format to HTML
     $mail->Subject = 'cambio de contraseña - sistema inventario';
     $mail->Body    = '
    <!DOCTYPE html>

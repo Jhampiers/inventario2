@@ -234,10 +234,70 @@ function validar_imputs_password() {
   }  
 
  } 
+
+ //TAREA
+
 async function actualizar_password() {
+
+    let id = document.getElementById('data').value;
+    let token = document.getElementById('data2').value;
+    let nueva_password = document.getElementById('password').value;
     
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('token', token);
+    formData.append('password', nueva_password);
+    formData.append('sesion', '');
+    
+    try {
+
+        // Enviar datos al controlador
+        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=nuevo_password', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: formData
+        });
+        
+        let json = await respuesta.json();
+        
+        if (json.status == true) {
+            Swal.fire({
+                type: 'success',
+                title: '¡Contraseña actualizada!',
+                text: json.msg,
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                footer: '',
+                timer: 2000
+            }).then(() => {
+                // Redirigir al login después del éxito
+                location.replace(base_url + "login");
+            });
+        } else {
+            Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: json.msg,
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                footer: '',
+                timer: 2000
+            });
+        }
+        
+    } catch (error) {
+        console.log("Error al actualizar contraseña: " + error);
+        Swal.fire({
+            type: 'error',
+            title: 'Error',
+            text: 'Error de conexión. Intente nuevamente.',
+            confirmButtonClass: 'btn btn-confirm mt-2',
+            footer: '',
+            timer: 2000
+        });
+    }
+
      //enviar informacion de password y id al controlador usuario
      //recibir informacion y encriptar la nueva contraseña
-     //guardar en base de datos y actualizar campo de reset_password=0 y token_password=''
+     //guardar en base de datos y actualizar campo de reset_password=0 y token_password='vacio'
      //notificar a usuario sobre el estado del proceso
 }

@@ -107,6 +107,18 @@ class UsuarioModel
         }
         return $arrRespuesta;
     }
+// TAREA
+public function guardarNuevoPassword($id, $password)
+{
+    $conexion = $this->conexion;
+    $password_secure = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "UPDATE usuarios SET password = ?, reset_password = 0, token_password = '' WHERE id = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("si", $password_secure, $id);
+
+    return $stmt->execute();
+}
 
 
 
