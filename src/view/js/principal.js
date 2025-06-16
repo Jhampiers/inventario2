@@ -289,7 +289,7 @@ async function actualizar_password() {
         Swal.fire({
             type: 'error',
             title: 'Error',
-            text: 'Error de conexión. Intente nuevamente.',
+            text: 'Error de conexión.',
             confirmButtonClass: 'btn btn-confirm mt-2',
             footer: '',
             timer: 2000
