@@ -223,9 +223,7 @@ if ($tipo=="buscar_movimiento_id") {
         foreach ($arrDetalle as $bien ) {
             $id_bien=$bien->id_bien;
             $res_bien = $objBien->buscarBienById($id_bien);
-            if ($res_bien) {
               array_push($array_bienes,$res_bien);
-            }
         }
 
         $arr_Respuesta['movimiento']=$arrMovimiento;
@@ -233,8 +231,9 @@ if ($tipo=="buscar_movimiento_id") {
         $arr_Respuesta['amb_destino']=$arrAmbDestino;
         $arr_Respuesta['datos_usuario'] = $arrUsuario;
         $arr_Respuesta['datos_ies'] = $arrIes;
-        $arr_Respuesta['detalle'] = $arrDetalle;
-        $arr_Respuesta['bienes']=$array_bienes;
+        //$arr_Respuesta['detalle'] = $arrDetalle;
+        //$arr_Respuesta['bienes']=$array_bienes;
+        $arr_Respuesta['detalle']=$array_bienes;
         $arr_Respuesta['status']=true;
         $arr_Respuesta['msg']='correcto';
 
