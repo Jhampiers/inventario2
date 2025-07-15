@@ -161,9 +161,9 @@ $contenido_pdf.= '
        //$logoRight = __DIR__ . '/assets/images/logo2.jpg';
 
         // Insertar imagen izquierda
-        $this->Image('./src/view/pp/assets/images/logo2.0.jpg', 15, 4, 16.4); // (archivo, x, y, ancho)
+        $this->Image('./src/view/pp/assets/images/logo2.0.jpg', 37, 4, 16.4); // (archivo, x, y, ancho)
         // Insertar imagen derecha
-        $this->Image('./src/view/pp/assets/images/logo2.jpg', 170, 2, 25);
+        $this->Image('./src/view/pp/assets/images/logo2.jpg', 150, 2, 25);
 
         // Título centrado
         $this->SetY(5); // ajustar posición vertical
