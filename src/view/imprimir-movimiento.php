@@ -153,7 +153,71 @@ $contenido_pdf.= '
 
         <?php
         require_once('./vendor/tecnickcom/tcpdf/tcpdf.php');
-        $pdf = new TCPDF();
+  class MYPDF extends TCPDF {
+    // Encabezado personalizado
+    public function Header() {
+        // Posicionar imágenes
+       //$logoLeft = __DIR__ . '/../../images/logo1.jpg';
+       //$logoRight = __DIR__ . '/assets/images/logo2.jpg';
+
+        // Insertar imagen izquierda
+        $this->Image('./src/view/pp/assets/images/logo2.0.jpg', 15, 4, 16.4); // (archivo, x, y, ancho)
+        // Insertar imagen derecha
+        $this->Image('./src/view/pp/assets/images/logo2.jpg', 170, 2, 25);
+
+        // Título centrado
+        $this->SetY(5); // ajustar posición vertical
+        $this->SetFont('helvetica', 'B', 9);
+        $this->Cell(0, 5, 'GOBIERNO REGIONAL DE AYACUCHO', 0, 1, 'C');
+        $this->Cell(0, 5, 'DIRECCIÓN REGIONAL DE EDUCACIÓN DE AYACUCHO', 0, 1, 'C');
+        $this->SetFont('helvetica', '', 8);
+        $this->Cell(0, 5, 'DIRECCIÓN DE ADMINISTRACIÓN', 0, 1, 'C');
+
+        // Línea doble azul (simulada con líneas)
+        $this->SetDrawColor(0, 64, 128); // color azul
+        $this->SetLineWidth(0.4);
+        $this->Line(15, 28, 195, 28); // primera línea
+        $this->SetLineWidth(0.2);
+        $this->Line(15, 30, 195, 30); // segunda línea
+
+        // Texto de ANEXO – 4 debajo de las líneas
+        $this->SetY(32); // Mover más abajo para evitar que se monte sobre la línea
+        $this->SetFont('helvetica', 'B', 10);
+        $this->Cell(0, 5, 'ANEXO – 4 -', 0, 1, 'C');
+
+        // Espaciado para el contenido del PDF
+        $this->Ln(5);
+    }
+
+    // Pie de página personalizado
+    public function Footer() {
+        $this->SetY(-20);
+        $this->SetFont('helvetica', '', 7);
+
+        // Línea horizontal
+        $this->Line(15, $this->GetY(), 195, $this->GetY());
+
+        $html = '
+        <table width="100%" style="font-size:7px; padding-top:3px;">
+            <tr>
+                <td width="33%"></td>
+                <td width="34%" align="center">
+                    <a href="https://www.dreaya.gob.pe" style="color: #0000EE; text-decoration: underline;">www.dreaya.gob.pe</a>
+                </td>
+                <td width="33%" align="right">
+                    Jr. 28 de Julio N° 385 – Huamanga<br/>
+                    ☎ (066) 31-2364<br/>
+                    🏢 (066) 31-1395 Anexo 55001
+                </td>
+            </tr>
+        </table>';
+        
+        $this->writeHTML($html, true, false, false, false, '');
+    }
+}
+
+        //otro
+        $pdf = new MYPDF();
         // set document information
        $pdf->SetCreator(PDF_CREATOR);
        $pdf->SetAuthor('QUISPE YAMPIERS');
