@@ -219,7 +219,6 @@ if ($tipo == "actualizar") {
 if ($tipo == "datos_registro") {
     $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
     if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
-        //repuesta
         $arr_Instirucion = $objInstitucion->buscarInstitucionOrdenado();
         $arr_Respuesta['instituciones'] = $arr_Instirucion;
         $arr_Respuesta['status'] = true;
@@ -227,3 +226,17 @@ if ($tipo == "datos_registro") {
     }
     echo json_encode($arr_Respuesta);
 }
+
+//agregado
+
+if ($tipo == "listarBienes") {
+    $arr_Respuesta = array('status' => false, 'msg' => 'Error_Sesion');
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        $arr_Bienes = $objBien->listarBienes();
+        $arr_Respuesta['status'] = true;
+        $arr_Respuesta['bienes'] = $arr_Bienes;
+    }
+    echo json_encode($arr_Respuesta);
+}
+
+
