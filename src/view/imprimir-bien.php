@@ -44,7 +44,7 @@ while ($fila = $resultado->fetch_assoc()) {
         <td>' . $fila['id'] . '</td>
         <td>' . $fila['id_ingreso_bienes'] . '</td>
         <td>' . $fila['id_ambiente'] . '</td>
-        <td>' . $fila['codigo_patrimonial'] . '</td>
+        <td>' . $fila['cod_patrimonial'] . '</td>
         <td>' . $fila['denominacion'] . '</td>
         <td>' . $fila['marca'] . '</td>
         <td>' . $fila['modelo'] . '</td>
