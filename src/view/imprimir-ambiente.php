@@ -40,7 +40,7 @@ while ($fila = $resultado->fetch_assoc()) {
         <td>' . $fila['encargado'] . '</td>
         <td>' . $fila['codigo'] . '</td>
         <td>' . $fila['detalle'] . '</td>
-         <td>' . $fila['otros_detalle '] . '</td>
+        <td>' . $fila['otros_detalle '] . '</td>
     </tr>';
 }
 $contenido_pdf .= '</tbody></table>';
