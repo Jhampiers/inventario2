@@ -177,3 +177,19 @@ if ($tipo == "datos_registro") {
     }
     echo json_encode($arr_Respuesta);
 }
+//tarea
+if ($tipo == "listar_todas_instituciones") {
+    $arr_Respuesta = ['status' => false, 'msg' => 'Error_Sesion'];
+    if ($objSesion->verificar_sesion_si_activa($id_sesion, $token)) {
+        $arr_Respuesta = ['status' => false, 'data' => []];
+        $arr_Instituciones = $objInstitucion->listarTodasInstituciones();
+        
+        if (!empty($arr_Instituciones)) {
+            $arr_Respuesta['status'] = true;
+            $arr_Respuesta['data'] = $arr_Instituciones;
+        } else {
+            $arr_Respuesta['msg'] = 'No se encontraron instituciones';
+        }
+    }
+    echo json_encode($arr_Respuesta);
+}

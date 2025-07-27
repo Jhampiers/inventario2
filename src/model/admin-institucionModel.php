@@ -78,6 +78,18 @@ class InstitucionModel
         return $arrRespuesta;
     }
 
+//tarea
+
+public function listarTodasInstituciones()
+{
+    $sql = $this->conexion->query("SELECT * FROM institucion ORDER BY nombre ASC");
+    $arrRespuesta = array();
+    while ($objeto = $sql->fetch_object()) {
+        array_push($arrRespuesta, $objeto);
+    }
+    return $arrRespuesta;
+}
+
 
 
 }

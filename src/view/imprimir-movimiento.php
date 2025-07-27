@@ -31,6 +31,7 @@ $curl = curl_init(); //inicia la sesión cURL
         //print_r($respuesta);
         $contenido_pdf = '';
         $contenido_pdf .= '
+        
         <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -236,8 +237,7 @@ $contenido_pdf.= '
     $pdf->writeHTML($contenido_pdf);
     //Close and output PDF document
     ob_clean();
-    $pdf->Output('sd', 'I');
-
+    $pdf->Output('papeleta_ambientes.pdf', 'I');
 
     }
 
