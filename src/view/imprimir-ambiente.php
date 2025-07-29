@@ -12,35 +12,46 @@ $ies =  $_POST['ies'] ?? '';
 $conexion = Conexion::connect();
 
 // Consulta SQL con filtros
-$sql = "SELECT id, id_ies, encargado, codigo,detalle,otros_detalle  FROM ambientes_institucion
-        WHERE codigo LIKE '$codigo%' AND detalle LIKE '$ambiente%'AND id_ies LIKE '$ies%'
-        ORDER BY id ASC";
+$sql = "SELECT 
+            a.id, 
+            i.nombre AS nombre_institucion, 
+            a.encargado, 
+            a.codigo, 
+            a.detalle  
+        FROM ambientes_institucion a
+        LEFT JOIN institucion i ON a.id_ies = i.id
+        WHERE a.codigo LIKE '$codigo%' 
+          AND a.detalle LIKE '$ambiente%' 
+          AND a.id_ies LIKE '$ies%'
+        ORDER BY a.id ASC";
+
 $resultado = $conexion->query($sql);
+$entidad = "DIRECCIÓN REGIONAL DE EDUCACIÓN - AYACUCHO";
 
 // Contenido HTML del PDF
 $contenido_pdf = '
 <h1 style="text-align: center; font-size:14px;">REPORTE DE AMBIENTES</h1>
+<p style="font-size:11px;"><strong>ENTIDAD:</strong> ' . $entidad . '</p>
 <table border="1" cellspacing="0" cellpadding="5">
     <thead>
         <tr style="background-color:#f2f2f2; font-size:10px;">
             <th>ID</th>
-            <th>ID IES</th>
+            <th>IES</th>
             <th>ENCARGADO</th>
             <th>CODIGO</th>
             <th>DETALLE</th>
-            <th>OTROS DETALLES</th>
         </tr>
     </thead>
     <tbody>';
 
 while ($fila = $resultado->fetch_assoc()) {
     $contenido_pdf .= '<tr style="font-size:9px;">
-        <td>' . $fila['id'] . '</td>
-        <td>' . $fila['id_ies'] . '</td>
-        <td>' . $fila['encargado'] . '</td>
-        <td>' . $fila['codigo'] . '</td>
-        <td>' . $fila['detalle'] . '</td>
-        <td>' . $fila['otros_detalle '] . '</td>
+      <td>' . $fila['id'] . '</td>
+<td>' . $fila['nombre_institucion'] . '</td>
+<td>' . $fila['encargado'] . '</td>
+<td>' . $fila['codigo'] . '</td>
+<td>' . $fila['detalle'] . '</td>
+
     </tr>';
 }
 $contenido_pdf .= '</tbody></table>';
@@ -51,15 +62,20 @@ $contenido_pdf .= '
     Ayacucho, _____ de _____ del 2025
 </div>
 
-<div style="margin-top: 100px; text-align: center;">
-    <div style="display: inline-block; width: 40%; margin-right: 8%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>ENTREGUÉ CONFORME</span>
-    </div>
-    <div style="display: inline-block; width: 40%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>RECIBÍ CONFORME</span>
-    </div>
+<div style="margin-top: 80px;">
+    <table style="width: 100%; font-size: 12px;" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                ENTREGUÉ CONFORME
+            </td>
+            <td style="width: 10%;"></td>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                RECIBÍ CONFORME
+            </td>
+        </tr>
+    </table>
 </div>';
 
 // Clase personalizada con encabezado y pie
@@ -115,7 +131,7 @@ $pdf->SetFont('helvetica', '', 9);
 $pdf->writeHTML($contenido_pdf, true, false, true, false, '');
 
 ob_clean();
-$pdf->Output('reporte_instituciones.pdf', 'I');
+$pdf->Output('reporte_ambientes.pdf', 'I');
 
 
 

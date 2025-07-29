@@ -33,7 +33,7 @@ $contenido_pdf = '
 <h1 style="text-align: center; font-size:14px;">REPORTE DE USUARIOS</h1>
 
 <p style="font-size:11px;"><strong>ENTIDAD:</strong> ' . $entidad . '</p>
-<p style="font-size:11px;"><strong>ÁREA:</strong> ' . $area . '</p>
+
 
 
 <table border="1" cellspacing="0" cellpadding="5">
@@ -61,23 +61,28 @@ while ($fila = $resultado->fetch_assoc()) {
 }
 $contenido_pdf .= '</tbody></table>';
 
-// Línea de fecha
-$contenido_pdf .= '
-<div class="date-line" style="text-align: right; margin-top: 30px; font-size: 12px;">
-    Ayacucho, _____ de _____ del 2024
-</div>';
+
 
 // Sección de firmas
 $contenido_pdf .= '
-<div style="margin-top: 100px; text-align: center;">
-    <div style="display: inline-block; width: 40%; margin-right: 8%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>ENTREGUÉ CONFORME</span>
-    </div>
-    <div style="display: inline-block; width: 40%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>RECIBÍ CONFORME</span>
-    </div>
+<div style="text-align: right; margin-top: 30px; font-size: 12px;">
+    Ayacucho, _____ de _____ del 2025
+</div>
+
+<div style="margin-top: 80px;">
+    <table style="width: 100%; font-size: 12px;" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                ENTREGUÉ CONFORME
+            </td>
+            <td style="width: 10%;"></td>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                RECIBÍ CONFORME
+            </td>
+        </tr>
+    </table>
 </div>';
 
 // Clase TCPDF personalizada

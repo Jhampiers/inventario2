@@ -11,14 +11,31 @@ $destino = $_POST['busqueda_tabla_amb_destino'] ?? '';
 $conexion = Conexion::connect();
 
 // Consulta SQL con filtros
-$sql = "SELECT id, id_ambiente_origen, id_ambiente_destino, id_usuario_registro, fecha_registro,descripcion,id_ies FROM movimientos
-        WHERE  id_ambiente_origen LIKE '$origen%' AND id_ambiente_destino LIKE '$destino%' 
-        ORDER BY id ASC";
+$sql = "SELECT 
+            m.id, 
+            ao.detalle AS ambiente_origen, 
+            ad.detalle AS ambiente_destino, 
+            u.nombres_apellidos, 
+            m.fecha_registro, 
+            m.descripcion, 
+            i.nombre AS ies
+        FROM movimientos m
+        INNER JOIN usuarios u ON m.id_usuario_registro = u.id
+        INNER JOIN ambientes_institucion ao ON m.id_ambiente_origen = ao.id
+        INNER JOIN ambientes_institucion ad ON m.id_ambiente_destino = ad.id
+        INNER JOIN institucion i ON m.id_ies = i.id
+        WHERE m.id_ambiente_origen LIKE '$origen%' 
+          AND m.id_ambiente_destino LIKE '$destino%'
+        ORDER BY m.id ASC";
+
+
 $resultado = $conexion->query($sql);
+$entidad = "DIRECCIÓN REGIONAL DE EDUCACIÓN - AYACUCHO";
 
 // Contenido HTML del PDF
 $contenido_pdf = '
 <h1 style="text-align: center; font-size:14px;">REPORTE DE MOVIMIENTOS</h1>
+<p style="font-size:11px;"><strong>ENTIDAD:</strong> ' . $entidad . '</p>
 <table border="1" cellspacing="0" cellpadding="5">
     <thead>
         <tr style="background-color:#f2f2f2; font-size:10px;">
@@ -28,20 +45,20 @@ $contenido_pdf = '
             <th>Usuario</th>
             <th>Fecha registro</th>
             <th>Descripcion</th>
-            <th>ID IES</th>
+            <th>IES</th>
         </tr>
     </thead>
     <tbody>';
 
 while ($fila = $resultado->fetch_assoc()) {
     $contenido_pdf .= '<tr style="font-size:9px;">
-        <td>' . $fila['id'] . '</td>
-        <td>' . $fila['id_ambiente_origen'] . '</td>
-        <td>' . $fila['id_ambiente_destino'] . '</td>
-        <td>' . $fila['id_usuario_registro'] . '</td>
-        <td>' . $fila['fecha_registro'] . '</td>
-        <td>' . $fila['descripcion'] . '</td>
-        <td>' . $fila['id_ies'] . '</td>
+ <td>' . $fila['id'] . '</td>
+<td>' . $fila['ambiente_origen'] . '</td>
+<td>' . $fila['ambiente_destino'] . '</td>
+<td>' . $fila['nombres_apellidos'] . '</td>
+<td>' . $fila['fecha_registro'] . '</td>
+<td>' . $fila['descripcion'] . '</td>
+<td>' . $fila['ies'] . '</td>
 
     </tr>';
 }
@@ -53,15 +70,20 @@ $contenido_pdf .= '
     Ayacucho, _____ de _____ del 2025
 </div>
 
-<div style="margin-top: 100px; text-align: center;">
-    <div style="display: inline-block; width: 40%; margin-right: 8%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>ENTREGUÉ CONFORME</span>
-    </div>
-    <div style="display: inline-block; width: 40%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>RECIBÍ CONFORME</span>
-    </div>
+<div style="margin-top: 80px;">
+    <table style="width: 100%; font-size: 12px;" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                ENTREGUÉ CONFORME
+            </td>
+            <td style="width: 10%;"></td>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                RECIBÍ CONFORME
+            </td>
+        </tr>
+    </table>
 </div>';
 
 // Clase personalizada con encabezado y pie

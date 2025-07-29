@@ -13,9 +13,28 @@ $denominacion = $_POST['busqueda_tabla_denominacion'] ?? '';
 $conexion = Conexion::connect();
 
 // Consulta SQL con filtros
-$sql = "SELECT id, id_ingreso_bienes, id_ambiente, cod_patrimonial, denominacion,marca,modelo,tipo,color,serie FROM bienes
-        WHERE cod_patrimonial LIKE '$codigo%' AND id_ambiente LIKE '$ambiente%' AND denominacion LIKE '$denominacion%'
-        ORDER BY id ASC";
+$sql = "SELECT 
+            b.id, 
+            b.cod_patrimonial, 
+            b.denominacion,
+            b.marca,
+            b.modelo,
+            b.tipo,
+            b.color,
+            b.serie,
+            b.dimensiones,
+            b.valor,
+            b.situacion,
+            b.estado_conservacion,
+            b.observaciones,
+            a.detalle AS nombre_ambiente
+        FROM bienes b
+        LEFT JOIN ambientes_institucion a ON b.id_ambiente = a.id
+        WHERE b.cod_patrimonial LIKE '$codigo%' 
+          AND b.id_ambiente LIKE '$ambiente%' 
+          AND b.denominacion LIKE '$denominacion%'
+        ORDER BY b.id ASC";
+
 $resultado = $conexion->query($sql);
 
 // Contenido HTML del PDF
@@ -24,9 +43,8 @@ $contenido_pdf = '
 <table border="1" cellspacing="0" cellpadding="5">
     <thead>
         <tr style="background-color:#f2f2f2; font-size:10px;">
-            <th>ID</th>
-            <th>Id Ingreso</th>
-            <th>Id Ambiente</th>
+            <th>N°</th>
+            <th>Ambiente</th>
             <th>Codigo patrimonial</th>
             <th>denominacion</th>
             <th>marca</th>
@@ -34,6 +52,11 @@ $contenido_pdf = '
             <th>tipo</th>
             <th>color</th>
             <th>serie</th>
+            <th>dimensiones</th>
+            <th>valor</th>
+            <th>situacion</th>
+            <th>estado</th>
+            <th>observaciones</th>
          
         </tr>
     </thead>
@@ -41,16 +64,21 @@ $contenido_pdf = '
 
 while ($fila = $resultado->fetch_assoc()) {
     $contenido_pdf .= '<tr style="font-size:9px;">
-        <td>' . $fila['id'] . '</td>
-        <td>' . $fila['id_ingreso_bienes'] . '</td>
-        <td>' . $fila['id_ambiente'] . '</td>
-        <td>' . $fila['cod_patrimonial'] . '</td>
-        <td>' . $fila['denominacion'] . '</td>
-        <td>' . $fila['marca'] . '</td>
-        <td>' . $fila['modelo'] . '</td>
-        <td>' . $fila['tipo'] . '</td>
-        <td>' . $fila['color'] . '</td>
-        <td>' . $fila['serie'] . '</td>
+      <td>' . $fila['id'] . '</td>
+<td>' . $fila['nombre_ambiente'] . '</td>
+<td>' . $fila['cod_patrimonial'] . '</td>
+<td>' . $fila['denominacion'] . '</td>
+<td>' . $fila['marca'] . '</td>
+<td>' . $fila['modelo'] . '</td>
+<td>' . $fila['tipo'] . '</td>
+<td>' . $fila['color'] . '</td>
+<td>' . $fila['serie'] . '</td>
+<td>' . $fila['dimensiones'] . '</td>
+<td>' . $fila['valor'] . '</td>
+<td>' . $fila['situacion'] . '</td>
+<td>' . $fila['estado_conservacion'] . '</td>
+<td>' . $fila['observaciones'] . '</td>
+
 
     </tr>';
 }
@@ -62,16 +90,22 @@ $contenido_pdf .= '
     Ayacucho, _____ de _____ del 2025
 </div>
 
-<div style="margin-top: 100px; text-align: center;">
-    <div style="display: inline-block; width: 40%; margin-right: 8%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>ENTREGUÉ CONFORME</span>
-    </div>
-    <div style="display: inline-block; width: 40%; text-align: center;">
-        <div style="border-top: 1px solid #000; width: 100%; margin-bottom: 5px;"></div>
-        <span>RECIBÍ CONFORME</span>
-    </div>
-</div>';
+<div style="margin-top: 80px;">
+    <table style="width: 100%; font-size: 12px;" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                ENTREGUÉ CONFORME
+            </td>
+            <td style="width: 10%;"></td>
+            <td style="width: 45%; text-align: center;">
+                <div style="border-top: 1px solid #000; margin-bottom: 5px;"></div>
+                RECIBÍ CONFORME
+            </td>
+        </tr>
+    </table>
+</div>
+';
 
 // Clase personalizada con encabezado y pie
 class MYPDF extends TCPDF {
